@@ -1,17 +1,33 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import { ChevronRight, MapPin, ShoppingCart, User, X } from "lucide-react";
+import {
+  ChevronRight,
+  MapPin,
+  Minus,
+  Plus,
+  ShoppingCart,
+  User,
+  X,
+} from "lucide-react";
 import React, { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  DialogMenu,
+  DialogContentMenu,
+  DialogTitleMenu,
+  DialogTriggerMenu,
+} from "@/components/ui/dialogMenu";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { OrderedFood } from "@/app/components/OrderedFood";
+import { OrderHistory } from "@/app/components/OrderHistory";
 
-const CartSignUp = () => {
+export const CartSignUp = () => {
   const [isChecked, setIsChecked] = useState(true);
   const HandleOnClick = () => {
     setIsChecked(!isChecked);
@@ -44,14 +60,50 @@ const CartSignUp = () => {
           </div>
         )}
       </div>
-      <button className="bg-white text-black rounded-full size-[36px] justify-center items-center flex relative">
-        <ShoppingCart className="size-4" />
-        <div className="size-[36px] left-[25.81px] bottom-1 absolute flex">
-          <div className="absolute rounded-full flex  bg-[#EF4444] text-white text-[10px] size-5 justify-center items-center">
-            {"1"}
+      <DialogMenu>
+        <DialogTriggerMenu className="bg-white text-black rounded-full size-[36px] justify-center items-center flex relative">
+          <ShoppingCart className="size-4" />
+          <div className="size-[36px] left-[25.81px] bottom-1 absolute flex">
+            <div className="absolute rounded-full flex  bg-[#EF4444] text-white text-[10px] size-5 justify-center items-center">
+              {"1"}
+            </div>
           </div>
-        </div>
-      </button>
+        </DialogTriggerMenu>
+        <DialogContentMenu className="bg-[#404040]">
+          <DialogTitleMenu className="flex justify-center items-center gap-3 text-white text-[20px] font-semibold">
+            <ShoppingCart className="text-white stroke-3 size-6" /> Order detail
+          </DialogTitleMenu>
+          <Tabs defaultValue="Cart" className="w-fit">
+            <TabsList className="bg-white flex p-1 h-fit w-full rounded-full">
+              <TabsTrigger
+                className="w-[227px] h-[36px] flex justify-center items-center rounded-full"
+                value="Cart"
+              >
+                Cart
+              </TabsTrigger>
+              <TabsTrigger
+                className="w-[227px] h-[36px] flex justify-center items-center rounded-full"
+                value="Order"
+              >
+                Order
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent
+              className="flex flex-col p-4 bg-white gap-6 rounded-[20px]  w-fit text-start"
+              value="Cart"
+            >
+              <OrderedFood />
+              <OrderedFood />
+            </TabsContent>
+            <TabsContent
+              className="flex flex-col p-4 bg-white gap-6 rounded-[20px]  w-fit text-start"
+              value="Order"
+            >
+              <OrderHistory />
+            </TabsContent>
+          </Tabs>
+        </DialogContentMenu>
+      </DialogMenu>
       <DropdownMenu>
         <DropdownMenuTrigger className="bg-[#EF4444] text-white  rounded-full size-[36px] justify-center items-center flex">
           <User className="size-4" />
@@ -66,5 +118,3 @@ const CartSignUp = () => {
     </div>
   );
 };
-
-export default CartSignUp;

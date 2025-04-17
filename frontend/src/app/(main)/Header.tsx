@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import React from "react";
-import CartSignUp from "./components/CartSignUp";
+import { CartSignUp } from "./components/CartSignUp";
 import { useRouter } from "next/navigation";
 
 const Header = () => {

@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { ButtonLeft } from "../../components/ButtonLeft";
 
 export default function () {
   const router = useRouter();
@@ -14,9 +14,7 @@ export default function () {
   };
   return (
     <div className="w-[416px] h-fit gap-6 flex flex-col">
-      <Button variant="outline" size="icon">
-        <ChevronLeft />
-      </Button>
+      <ButtonLeft />
       <div>
         <h1 className="text-[24px] font-[600]">Log in</h1>
         <p className="text-[16px] text-[#71717A]">

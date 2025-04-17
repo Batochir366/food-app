@@ -1,3 +1,4 @@
+import { ButtonLeft } from "@/app/components/ButtonLeft";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ChevronLeft } from "lucide-react";
@@ -5,9 +6,7 @@ import { ChevronLeft } from "lucide-react";
 const Step2 = () => {
   return (
     <div className="w-[416px] h-fit gap-6 flex flex-col">
-      <Button variant="outline" size="icon">
-        <ChevronLeft />
-      </Button>
+      <ButtonLeft />
       <div>
         <h1 className="text-[24px] font-[600]">Please verify Your Email</h1>
         <div className="flex">
