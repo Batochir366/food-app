@@ -1,6 +1,9 @@
 "use client";
 import MenuContainer from "./components/MenuContainer";
 import { FoodCategor } from "./components/FoodCategor";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useSearchParams } from "next/navigation";
 export default function Home() {
   return (
     <div className="bg-[#404040] h-fit">
@@ -12,7 +15,7 @@ export default function Home() {
       <div className="flex py-8 px-[88px] flex-col">
         <MenuContainer />
         <div className="flex flex-col">
-          <FoodCategor CategorName="Appetizers" />
+          <FoodCategor />
         </div>
       </div>
     </div>

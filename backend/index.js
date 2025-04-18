@@ -1,12 +1,10 @@
 import express, { json } from "express";
 import cors from "cors";
-import { config, configDotenv } from "dotenv";
 import { connectMongoDB } from "./connectDB.js";
 import { userRouter } from "./routes/user.js";
 import { FoodRouter } from "./routes/food.js";
 import { categoryRouter } from "./routes/category.js";
 
-configDotenv();
 connectMongoDB();
 
 const port = process.env.PORT;
