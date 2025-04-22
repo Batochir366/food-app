@@ -10,7 +10,6 @@ export const createFood = async (req, res) => {
       ingredients: ingredients,
       category: category,
     });
-
     return res
       .status(200)
       .send({
@@ -55,9 +54,11 @@ export const getFood = async (_, res) => {
 export const getFoodById = async (req, res) => {
   const { id } = req.params;
   try {
-    const Food = await foodModel.find({
-      category: id,
-    });
+    const Food = await foodModel
+      .find({
+        category: id,
+      })
+      .populate("category");
     return res
       .status(200)
       .send({

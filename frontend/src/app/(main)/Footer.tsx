@@ -7,22 +7,31 @@ const Footer = () => {
       <div className="flex pt-[60px] w-full">
         <div className="bg-[#EF4444] py-7 flex w-full">
           <div className="flex animate-slideLeft gap-[34px]">
-            <p className="text-white h-[36px] text-[30px] font-[600]">
+            <p className="text-white text-nowrap h-[36px] text-[30px] font-[600]">
               Fresh fast delivered
             </p>
-            <p className="text-white h-[36px] text-[30px] font-[600]">
+            <p className="text-white text-nowrap h-[36px] text-[30px] font-[600]">
               Fresh fast delivered
             </p>
-            <p className="text-white h-[36px] text-[30px] font-[600]">
+            <p className="text-white text-nowrap h-[36px] text-[30px] font-[600]">
               Fresh fast delivered
             </p>
-            <p className="text-white h-[36px] text-[30px] font-[600]">
+            <p className="text-white text-nowrap h-[36px] text-[30px] font-[600]">
               Fresh fast delivered
             </p>
-            <p className="text-white h-[36px] text-[30px] font-[600]">
+            <p className="text-white text-nowrap h-[36px] text-[30px] font-[600]">
               Fresh fast delivered
             </p>
-            <p className="text-white h-[36px] text-[30px] font-[600]">
+            <p className="text-white text-nowrap h-[36px] text-[30px] font-[600]">
+              Fresh fast delivered
+            </p>
+            <p className="text-white text-nowrap h-[36px] text-[30px] font-[600]">
+              Fresh fast delivered
+            </p>
+            <p className="text-white text-nowrap h-[36px] text-[30px] font-[600]">
+              Fresh fast delivered
+            </p>
+            <p className="text-white text-nowrap h-[36px] text-[30px] font-[600]">
               Fresh fast delivered
             </p>
           </div>

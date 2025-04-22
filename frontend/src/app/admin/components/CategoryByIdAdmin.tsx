@@ -1,7 +1,4 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import {
   Dialog,
   DialogContent,
@@ -10,29 +7,34 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
-export const FoodCategor = ({ name, id }: { name: string; id: string }) => {
+import { useSearchParams } from "next/navigation";
+import axios from "axios";
+export const CategoryByIdAdmin = () => {
   const [data, setData] = useState([]);
+  const searchParams = useSearchParams();
+
+  let idp = searchParams.get("categoryId") || "";
+  let name = searchParams.get("catname") || "";
 
   const fetchFoodData = async () => {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URI}/food/${id}`
+      `${process.env.NEXT_PUBLIC_BACKEND_URI}/food/${idp}`
     );
     setData(response.data.Food);
   };
-
   useEffect(() => {
     fetchFoodData();
-  }, []);
-
-  console.log(data, "food");
+  }, [searchParams]);
   return (
     <div className="flex flex-col">
-      <div className="flex pt-[54px] flex-col w-full">
-        <h1 className="font-[600] text-[30px] text-white">{name}</h1>
-        <div className="flex gap-5 pt-[54px] flex-wrap">
+      <div className="flex p-5 bg-white rounded-[12px] flex-col w-fit">
+        <h1 className="font-[600] text-[30px] text-black">
+          {name} ({data?.length})
+        </h1>
+        <div className="flex gap-5 pt-4 flex-wrap">
           {data?.map((value: any, index) => (
             <Dialog key={index}>
-              <div className="size-fit relative">
+              <div className="size-fit border border-[#E4E4E7] rounded-[20px] relative">
                 <Button className="absolute mt-[170px] ml-[320px] flex z-10 bg-white rounded-full">
                   <Plus className="text-[#EF4444] stroke-3 size-4" />
                 </Button>

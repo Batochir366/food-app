@@ -1,1 +1,3 @@
-import express from "express";
+import mongoose from "mongoose";
+
+const orderSchema = new mongoose.Schema({});

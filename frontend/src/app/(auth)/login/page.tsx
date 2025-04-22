@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { ButtonLeft } from "../../components/ButtonLeft";
 
-export default function () {
+export default function page() {
   const router = useRouter();
   const HandleChangePage = () => {
     router.push("/signUp");

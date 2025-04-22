@@ -4,7 +4,22 @@ import { FoodCategor } from "./components/FoodCategor";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import { FoodCategoryById } from "./components/FoodCategoryById";
+
 export default function Home() {
+  const [dataCat, setDataCat] = useState([]);
+
+  const FetchMenuData = async () => {
+    const res = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URI}/category`
+    );
+    setDataCat(res.data.category);
+  };
+  useEffect(() => {
+    FetchMenuData();
+  }, []);
+  const searchParams = useSearchParams();
+  let idp = searchParams.get("categoryId") || "";
   return (
     <div className="bg-[#404040] h-fit">
       <img
@@ -15,7 +30,15 @@ export default function Home() {
       <div className="flex py-8 px-[88px] flex-col">
         <MenuContainer />
         <div className="flex flex-col">
-          <FoodCategor />
+          {idp ? (
+            <FoodCategoryById />
+          ) : (
+            <>
+              {dataCat.map((value: any, index) => (
+                <FoodCategor key={index} id={value._id} name={value.Name} />
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>

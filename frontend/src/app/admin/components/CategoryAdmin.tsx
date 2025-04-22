@@ -9,8 +9,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus } from "lucide-react";
-export const FoodCategor = ({ name, id }: { name: string; id: string }) => {
+import { Minus, Pen, Plus } from "lucide-react";
+export const CategoryAdmin = ({ id, name }: { id: string; name: string }) => {
   const [data, setData] = useState([]);
 
   const fetchFoodData = async () => {
@@ -23,18 +23,18 @@ export const FoodCategor = ({ name, id }: { name: string; id: string }) => {
   useEffect(() => {
     fetchFoodData();
   }, []);
-
-  console.log(data, "food");
   return (
-    <div className="flex flex-col">
-      <div className="flex pt-[54px] flex-col w-full">
-        <h1 className="font-[600] text-[30px] text-white">{name}</h1>
-        <div className="flex gap-5 pt-[54px] flex-wrap">
+    <div className="flex pt-4 flex-col">
+      <div className="flex p-5 bg-white rounded-[12px] flex-col w-fit">
+        <h1 className="font-[600] text-[30px] text-black">
+          {name} ({data?.length})
+        </h1>
+        <div className="flex gap-5 pt-4 flex-wrap">
           {data?.map((value: any, index) => (
             <Dialog key={index}>
-              <div className="size-fit relative">
+              <div className="size-fit border border-[#E4E4E7] rounded-[20px] relative">
                 <Button className="absolute mt-[170px] ml-[320px] flex z-10 bg-white rounded-full">
-                  <Plus className="text-[#EF4444] stroke-3 size-4" />
+                  <Pen className="text-[#EF4444] stroke-3 size-4" />
                 </Button>
                 <DialogTrigger className="flex flex-col px-4 py-4 bg-white gap-6 rounded-[20px]  w-fit text-start">
                   <img

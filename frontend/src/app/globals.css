@@ -41,7 +41,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --animate-slideLeft: slideLeft 13s linear infinite;
+  --animate-slideLeft: slideLeft 15s linear infinite;
   @keyframes slideLeft {
     0% {
       transform: translateX(100%);
