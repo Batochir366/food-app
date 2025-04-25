@@ -1,38 +1,73 @@
 "use client";
 
-import { LayoutDashboard, Plus, Settings, Truck } from "lucide-react";
+import { Check, LayoutDashboard, Plus, Settings, Truck } from "lucide-react";
 import {
   TabsAdmin,
   TabsContentAdmin,
   TabsListAdmin,
   TabsTriggerAdmin,
 } from "@/components/ui/tabsAdmin";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CategoryAdmin } from "./components/CategoryAdmin";
 import { CategoryByIdAdmin } from "./components/CategoryByIdAdmin";
 import {
   DialogCat,
-  DialogCloseCat,
   DialogContentCat,
-  DialogDescriptionCat,
-  DialogFooterCat,
-  DialogHeaderCat,
-  DialogOverlayCat,
-  DialogPortalCat,
   DialogTitleCat,
   DialogTriggerCat,
+  DialogCloseCat,
 } from "@/components/ui/CategoryDialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast, Toaster } from "sonner";
 type dataType = {
   Name: string;
   _id: string;
 };
+const fetchData = (cateogryId) => {
+  axios.get(url);
+};
+
+const data = [
+  {
+    categoryName: "Mongol hool",
+    foods: [{}],
+  },
+  {
+    categoryName: "Mongol hool",
+    foods: [{}],
+  },
+  {
+    categoryName: "Mongol hool",
+    foods: [{}],
+  },
+  {
+    categoryName: "Mongol hool",
+    foods: [{}],
+  },
+];
+
+// cate
+
+data.map((el) => {
+  return (
+    <div>
+      <h1>{el.categoryName}</h1>
+      <div className="flex flex-wrap">
+        <div></div>
+        {el.foods.map((food) => {
+          <foodCompnent />;
+        })}
+      </div>
+    </div>
+  );
+});
 export default function page() {
   const [data, setData] = useState<dataType[]>();
   const [isClicked, setIsClicked] = useState(true);
+  const [inputValue, setInputValue] = useState("");
   const searchParams = useSearchParams();
   const id = searchParams.get("categoryId");
   let idp = searchParams.get("categoryId") || "";
@@ -45,16 +80,6 @@ export default function page() {
   useEffect(() => {
     FetchMenuData();
   }, []);
-  const [FoodById, setFoodById] = useState([]);
-  const fetchFoodData = async () => {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URI}/food/${idp}`
-    );
-    setFoodById(response.data.Food);
-  };
-  useEffect(() => {
-    fetchFoodData();
-  }, [searchParams]);
 
   const router = useRouter();
   const handleId = (_id: string, Name: string) => {
@@ -68,8 +93,36 @@ export default function page() {
     setIsClicked(!isClicked);
     router.push("/admin");
   };
+
+  const handlecat = () => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URI}/category`, {
+        Name: inputValue,
+      })
+      .then((response) => {
+        FetchMenuData();
+        toast.custom((t) => (
+          <div
+            className={`w-[400px] p-4 rounded-xl shadow-lg bg-[#18181b] text-white flex items-center gap-4 transition-all`}
+          >
+            <Check className="size-4 text-white" />
+            <span className="text-[16px] font-medium text-[#FAFAFA] ">
+              New Category `{inputValue}` is being added to the menu
+            </span>
+          </div>
+        ));
+      })
+      .catch((error) => {
+        console.error(error.response?.data?.message || error.message);
+      });
+    setInputValue("");
+  };
+  const handle = (e: any) => {
+    setInputValue(e.target.value);
+  };
   return (
     <div className="flex flex-col gap-10 px-5 py-[36px] size-fit bg-[#F4F4F5]">
+      <Toaster position="top-center" />
       <div className="flex gap-2 size-fit">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +193,6 @@ export default function page() {
                       {data?.length}
                     </p>
                   </button>
-
                   {data?.map((value: dataType, index: number) => (
                     <button
                       key={index}
@@ -160,28 +212,17 @@ export default function page() {
                     </button>
                   ))}
                   <DialogCat>
-                    <DialogTriggerCat className="flex size-fit p-1 bg-[#EF4444] rounded-full active:bg-white">
+                    <DialogTriggerCat
+                      onClick={() => handlecat}
+                      className="flex size-fit p-1 bg-[#EF4444] rounded-full active:bg-white"
+                    >
                       <Plus className="text-white active:text-[#ef4444] stroke-1" />
                     </DialogTriggerCat>
-                    <DialogContentCat>
-                      <DialogTitleCat className="font-[600] text-black text-[18px] flex items-start">
-                        Add new category
-                      </DialogTitleCat>
-                      <div className="flex items-end gap-6 flex-col">
-                        <div className="flex gap-2 flex-col">
-                          <p className="flex font-[500] text-[14px]">
-                            Category name
-                          </p>
-                          <Input
-                            className="w-[388px]"
-                            placeholder="Type category name..."
-                          />
-                        </div>
-                        <div className="flex pt-5">
-                          <Button className="w-[120px]">Add category</Button>
-                        </div>
-                      </div>
-                    </DialogContentCat>
+                    <Test
+                      handle={handle}
+                      inputValue={inputValue}
+                      handlecat={handlecat}
+                    />
                   </DialogCat>
                 </div>
               </div>
@@ -211,3 +252,41 @@ export default function page() {
     </div>
   );
 }
+
+const Test = ({ handle, inputValue, handlecat }) => {
+  return (
+    <DialogContentCat>
+      <DialogTitleCat className="font-[600] text-black text-[18px] flex items-start">
+        Add new category
+      </DialogTitleCat>
+      <div className="flex items-end gap-6 flex-col">
+        <div className="flex gap-2 flex-col">
+          <p className="flex font-[500] text-[14px]">Category name</p>
+          <Input
+            onChange={handle}
+            value={inputValue}
+            className="w-[388px]"
+            placeholder="Type category name..."
+          />
+        </div>
+        <div onClick={handlecat} className="flex pt-5">
+          <DialogCloseCat
+            className={`${inputValue === "" ? " hidden" : null}`}
+            asChild
+          >
+            <Button className="w-[120px]">Add category</Button>
+          </DialogCloseCat>
+        </div>
+      </div>
+    </DialogContentCat>
+  );
+};
+
+// 1. Food component
+// trigger button clicked then dialog
+// admin or user
+// food component
+// user dialog
+// admin dialog
+// 2. Mockdata
+// map

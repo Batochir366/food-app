@@ -1,6 +1,16 @@
 import express from "express";
-import { createFood, getFood, getFoodById } from "../controller/food.js";
+import {
+  createFood,
+  deleteFood,
+  getFood,
+  getFoodByCatId,
+  updateFood,
+} from "../controller/food.js";
 
 export const FoodRouter = express.Router();
 
-FoodRouter.post("/", createFood).get("/", getFood).get("/:id", getFoodById);
+FoodRouter.post("/", createFood)
+  .get("/", getFood)
+  .get("/:id", getFoodByCatId)
+  .put("/:FoodId", updateFood)
+  .delete("/:FoodId", deleteFood);

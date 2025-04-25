@@ -50,11 +50,17 @@ export const FoodCategoryById = () => {
                         </DialogTitle>
                         <p className="font-[600] text-[16px] text-black">{`${value.price} ₮`}</p>
                       </div>
-                      {value.ingredients === "" ? (
-                        <div className="h-[48px] w-[365px]"></div>
+                      {value.ingredients?.length < 80 ||
+                      value.ingredients === undefined ? (
+                        <div className="h-[48px] w-[365px]">
+                          {value.ingredients}
+                        </div>
                       ) : (
                         <p className="w-[365px]">
-                          {value.ingredients.slice(0, 80) + "..."}
+                          {value.ingredients === undefined ||
+                          value.ingredients?.length < 80
+                            ? ""
+                            : value.ingredients?.slice(0, 80) + "..."}
                         </p>
                       )}
                     </div>

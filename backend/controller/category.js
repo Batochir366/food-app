@@ -46,3 +46,18 @@ export const getCategory = async (_, res) => {
       .end();
   }
 };
+
+// export const updateCategory = async () => {
+//   try {
+//     const category = await categoryModel;
+//   } catch (error) {
+//     console.error(error, "err");
+//     return res
+//       .status(400)
+//       .send({
+//         success: false,
+//         error: error,
+//       })
+//       .end();
+//   }
+// };

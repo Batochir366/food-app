@@ -4,6 +4,7 @@ import { connectMongoDB } from "./connectDB.js";
 import { userRouter } from "./routes/user.js";
 import { FoodRouter } from "./routes/food.js";
 import { categoryRouter } from "./routes/category.js";
+import { authRouter } from "./routes/auth.js";
 
 connectMongoDB();
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use("/user", userRouter);
 app.use("/food", FoodRouter);
 app.use("/category", categoryRouter);
+app.use("/auth", authRouter);
 
 app.listen(port, () => {
   console.log(`server running at http://localhost:${port}/`);
