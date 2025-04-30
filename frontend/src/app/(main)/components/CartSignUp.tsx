@@ -9,7 +9,7 @@ import {
   User,
   X,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,7 +23,6 @@ import {
   DialogTriggerMenu,
 } from "@/components/ui/dialogMenu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { OrderedFood } from "@/app/components/OrderedFood";
 import { OrderHistory } from "@/app/components/OrderHistory";
 
@@ -32,6 +31,9 @@ export const CartSignUp = () => {
   const HandleOnClick = () => {
     setIsChecked(!isChecked);
   };
+
+  const foods = JSON.parse(localStorage.getItem("foods")!);
+
   return (
     <div className="flex gap-3 w-fit h-fit">
       <div className="flex w-fit bg-white h-[36px] gap-1 rounded-full justify-center items-center px-3">
@@ -65,7 +67,7 @@ export const CartSignUp = () => {
           <ShoppingCart className="size-4" />
           <div className="size-[36px] left-[25.81px] bottom-1 absolute flex">
             <div className="absolute rounded-full flex  bg-[#EF4444] text-white text-[10px] size-5 justify-center items-center">
-              {"1"}
+              {foods?.length}
             </div>
           </div>
         </DialogTriggerMenu>
@@ -89,11 +91,23 @@ export const CartSignUp = () => {
               </TabsTrigger>
             </TabsList>
             <TabsContent
-              className="flex flex-col p-4 bg-white gap-6 rounded-[20px]  w-fit text-start"
+              className="flex flex-col p-4 bg-white gap-6 rounded-[20px] w-fit text-start"
               value="Cart"
             >
-              <OrderedFood />
-              <OrderedFood />
+              <div className="overflow-scroll">
+                <div className="flex flex-col p-4 bg-white gap-6 rounded-[20px] overflow-scroll size-fit text-start">
+                  <h1 className="text-[20px] font-semibold">My Cart</h1>
+                  {foods &&
+                    foods?.map((value: any, index) => (
+                      <OrderedFood
+                        ingredients={value.ingredients}
+                        FoodName={value.FoodName}
+                        price={value.price}
+                        image={value.image}
+                      />
+                    ))}
+                </div>
+              </div>
             </TabsContent>
             <TabsContent
               className="flex flex-col p-4 bg-white gap-6 rounded-[20px]  w-fit text-start"

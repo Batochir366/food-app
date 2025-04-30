@@ -126,7 +126,7 @@ export const CategoryAdmin = ({ id, name }: { id: string; name: string }) => {
     console.log(updateData, "date");
     try {
       await axios
-        .put(`${process.env.NEXT_PUBLIC_BACKEND_URI}/food/${id}`, {})
+        .put(`${process.env.NEXT_PUBLIC_BACKEND_URI}/food/${id}`)
         .then((response) => {
           fetchFoodData();
           toast.custom((c) => <p>gg</p>);

@@ -7,11 +7,9 @@ import {
   TabsListAdmin,
   TabsTriggerAdmin,
 } from "@/components/ui/tabsAdmin";
-import React, { useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CategoryAdmin } from "./components/CategoryAdmin";
-import { CategoryByIdAdmin } from "./components/CategoryByIdAdmin";
 import {
   DialogCat,
   DialogContentCat,
@@ -22,73 +20,23 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast, Toaster } from "sonner";
+import { FoodCategor } from "../components/FoodCategor";
+import MenuContainer from "../(main)/components/MenuContainer";
+import { CategoryButtons } from "../components/CategoryButtons";
 type dataType = {
   Name: string;
   _id: string;
 };
-const fetchData = (cateogryId) => {
-  axios.get(url);
-};
 
-const data = [
-  {
-    categoryName: "Mongol hool",
-    foods: [{}],
-  },
-  {
-    categoryName: "Mongol hool",
-    foods: [{}],
-  },
-  {
-    categoryName: "Mongol hool",
-    foods: [{}],
-  },
-  {
-    categoryName: "Mongol hool",
-    foods: [{}],
-  },
-];
-
-// cate
-
-data.map((el) => {
-  return (
-    <div>
-      <h1>{el.categoryName}</h1>
-      <div className="flex flex-wrap">
-        <div></div>
-        {el.foods.map((food) => {
-          <foodCompnent />;
-        })}
-      </div>
-    </div>
-  );
-});
 export default function page() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("categoryId");
   const [data, setData] = useState<dataType[]>();
   const [isClicked, setIsClicked] = useState(true);
   const [inputValue, setInputValue] = useState("");
-  const searchParams = useSearchParams();
-  const id = searchParams.get("categoryId");
-  let idp = searchParams.get("categoryId") || "";
-  const FetchMenuData = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URI}/category`
-    );
-    setData(res.data.category);
-  };
-  useEffect(() => {
-    FetchMenuData();
-  }, []);
 
   const router = useRouter();
-  const handleId = (_id: string, Name: string) => {
-    {
-      id == _id
-        ? router.push("/admin")
-        : router.push(`?categoryId=${_id}&catname=${Name}`);
-    }
-  };
+
   const handleOnClick = () => {
     setIsClicked(!isClicked);
     router.push("/admin");
@@ -117,7 +65,7 @@ export default function page() {
       });
     setInputValue("");
   };
-  const handle = (e: any) => {
+  const handle = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
   return (
@@ -193,24 +141,7 @@ export default function page() {
                       {data?.length}
                     </p>
                   </button>
-                  {data?.map((value: dataType, index: number) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        handleId(value._id, value.Name);
-                      }}
-                      className={`${
-                        value._id === id
-                          ? "border-[#EF4444] border-1"
-                          : "bg-white text-black border-[#E4E4E7] border-1"
-                      } rounded-full min-w-fit py-2 px-3 h-9 flex justify-center items-center gap-2`}
-                    >
-                      {value.Name}
-                      {/* <p className="flex size-fit px-3 bg-black font-semibold text-white rounded-full">
-                        {FoodById.length}
-                      </p> */}
-                    </button>
-                  ))}
+                  <CategoryButtons />
                   <DialogCat>
                     <DialogTriggerCat
                       onClick={() => handlecat}
@@ -228,19 +159,7 @@ export default function page() {
               </div>
             </div>
             <div className="flex size-fit flex-col">
-              {idp ? (
-                <CategoryByIdAdmin />
-              ) : (
-                <>
-                  {data?.map((value: any, index) => (
-                    <CategoryAdmin
-                      key={index}
-                      id={value._id}
-                      name={value.Name}
-                    />
-                  ))}
-                </>
-              )}
+              <FoodCategor />
             </div>
           </TabsContentAdmin>
           <TabsContentAdmin value="order">
@@ -252,7 +171,6 @@ export default function page() {
     </div>
   );
 }
-
 const Test = ({ handle, inputValue, handlecat }) => {
   return (
     <DialogContentCat>

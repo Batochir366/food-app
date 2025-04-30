@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+import { categoryModel } from "../model/category.js";
 import { foodModel } from "../model/food.js";
 
 export const createFood = async (req, res) => {
@@ -53,11 +55,6 @@ export const getFood = async (_, res) => {
 
 export const getFoodByCatId = async (req, res) => {
   const { id } = req.params;
-  // const result = categoryModal.find({})
-  // resut.map((category) => {
-  //  await category._id
-  //  return { category.name, foods}
-  // })
   try {
     const Food = await foodModel.find({ category: id });
     return res
@@ -74,6 +71,53 @@ export const getFoodByCatId = async (req, res) => {
       .send({
         success: false,
         error: error,
+      })
+      .end();
+  }
+};
+
+export const getFoodByCatFoods = async (req, res) => {
+  const { categoryId } = req.query;
+  const match = categoryId;
+  const filter = match
+    ? {
+        $match: { _id: new Types.ObjectId(match) },
+      }
+    : {
+        $match: {},
+      };
+  try {
+    const Food = await categoryModel.aggregate([
+      filter,
+      {
+        $lookup: {
+          from: "foods",
+          localField: "_id",
+          foreignField: "category",
+          as: "results",
+        },
+      },
+      {
+        $project: {
+          Name: 1,
+          results: 1,
+        },
+      },
+    ]);
+    return res
+      .status(200)
+      .send({
+        success: true,
+        Food: Food,
+      })
+      .end();
+  } catch (error) {
+    console.log(error.message, "error");
+    return res
+      .status(400)
+      .send({
+        success: false,
+        error: error.message,
       })
       .end();
   }
