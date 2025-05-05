@@ -1,12 +1,8 @@
-import { ButtonLeft } from "@/app/components/ButtonLeft";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ChevronLeft } from "lucide-react";
 
-const Step2 = () => {
+export const Step2 = ({ onClick }: { onClick: () => void }) => {
   return (
-    <div className="w-[416px] h-fit gap-6 flex flex-col">
-      <ButtonLeft />
+    <>
       <div>
         <h1 className="text-[24px] font-[600]">Please verify Your Email</h1>
         <div className="flex">
@@ -23,17 +19,14 @@ const Step2 = () => {
           </p>
         </div>
       </div>
-      <div className="flex flex-col gap-4">
-        <Input
-          className="focus-visible:outline-none"
-          placeholder="example@gmail.com"
-        />
-      </div>
-      <Button className="w-[416px] h-[36px] bg-black text-white rounded-md">
+      <Button
+        onClick={onClick}
+        className="w-[416px] h-[36px] bg-black text-white rounded-md"
+      >
         Resend email
       </Button>
-    </div>
+    </>
   );
 };
 
-export default Step2;
+

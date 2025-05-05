@@ -1,12 +1,9 @@
-import { ButtonLeft } from "@/app/components/ButtonLeft";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChevronLeft } from "lucide-react";
 
-const Step1 = ({ onClick }: { onClick: () => void }) => {
+export const Step1 = ({ onClick }: { onClick: () => void }) => {
   return (
-    <div className="w-[416px] h-fit gap-6 flex flex-col">
-      <ButtonLeft />
+    <>
       <div>
         <h1 className="text-[24px] font-[600]">Reset your password</h1>
         <p className="text-[16px] text-[#71717A]">
@@ -19,7 +16,10 @@ const Step1 = ({ onClick }: { onClick: () => void }) => {
           placeholder="example@gmail.com"
         />
       </div>
-      <Button className="w-[416px] h-[36px] bg-black text-white rounded-md">
+      <Button
+        onClick={onClick}
+        className="w-[416px] h-[36px] bg-black text-white rounded-md"
+      >
         Send link
       </Button>
       <div className="flex w-full justify-center gap-3">
@@ -28,8 +28,6 @@ const Step1 = ({ onClick }: { onClick: () => void }) => {
           Sign up
         </p>
       </div>
-    </div>
+    </>
   );
 };
-
-export default Step1;

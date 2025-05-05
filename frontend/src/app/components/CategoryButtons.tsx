@@ -25,13 +25,13 @@ export const CategoryButtons = () => {
   }, []);
 
   const router = useRouter();
-  const handleId = (_id: string, Name: string) => {
+  const handleId = (_id: string) => {
     {
       id == _id
         ? isAdmin
           ? router.push("/admin")
           : router.push("/")
-        : router.push(`?categoryId=${_id}&catname=${Name}`);
+        : router.push(`?categoryId=${_id}`);
     }
   };
   return (
@@ -40,7 +40,7 @@ export const CategoryButtons = () => {
         <button
           key={index}
           onClick={() => {
-            handleId(value._id, value.Name);
+            handleId(value._id);
           }}
           className={`${
             value._id === id ? "bg-[#EF4444] text-white" : "bg-white text-black"

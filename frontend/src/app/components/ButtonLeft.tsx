@@ -4,13 +4,10 @@ import { useRouter } from "next/navigation";
 
 import React from "react";
 
-export const ButtonLeft = () => {
+export const ButtonLeft = ({ onClick }: { onClick: () => void }) => {
   const router = useRouter();
-  const HandlePageToHome = () => {
-    router.push("/");
-  };
   return (
-    <Button onClick={() => HandlePageToHome()} variant="outline" size="icon">
+    <Button onClick={onClick} variant="outline" size="icon">
       <ChevronLeft />
     </Button>
   );

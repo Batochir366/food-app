@@ -51,7 +51,6 @@ export const AddFood = ({
       [name]: value[0]?.toUpperCase() + value?.substring(1),
     }));
   };
-
   const handlePostData = async () => {
     const imageURL = await uploadImage(file as File);
     await axios

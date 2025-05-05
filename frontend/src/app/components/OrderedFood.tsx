@@ -1,18 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
-import React from "react";
+import React, { use, useEffect, useState } from "react";
 import { Separator } from "./Separator";
 
 export const OrderedFood = ({
   image,
   FoodName,
   ingredients,
-  price,
+  totalQuantity,
+  totalPrice,
+  increase,
+  dicrease,
 }: {
   image: string;
   FoodName: string;
   ingredients: string;
-  price: string;
+  totalQuantity: number;
+  totalPrice: string | null;
+  increase: () => void;
+  dicrease: () => void;
 }) => {
   return (
     <>
@@ -32,15 +38,20 @@ export const OrderedFood = ({
           <div>
             <div className="flex justify-between items-center">
               <div className="flex gap-3 justify-center items-center">
-                <Button>
-                  <Minus />
+                <Button
+                  onClick={dicrease}
+                  className={`${
+                    totalQuantity == 1 ? "opacity-80" : null
+                  } bg-white`}
+                >
+                  <Minus className="text-black" />
                 </Button>
-                <p>{"1"}</p>
-                <Button>
-                  <Plus />
+                <p>{totalQuantity}</p>
+                <Button onClick={increase} className="bg-white">
+                  <Plus className="text-black" />
                 </Button>
               </div>
-              <p className="font-[600] text-[16px] text-black">{`${price} ₮`}</p>
+              <p className="font-[600] text-[16px] text-black">{`${totalPrice} ₮`}</p>
             </div>
           </div>
         </div>

@@ -2,6 +2,8 @@ import { UserModel } from "../model/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { configDotenv } from "dotenv";
+import { sendmail } from "../utils/sendmail.js";
+
 configDotenv();
 const secret_key = process.env.SECRET_KEY;
 export const login = async (req, res) => {
@@ -40,5 +42,16 @@ export const login = async (req, res) => {
         error: error,
       })
       .end();
+  }
+};
+
+export const sendMail = async (req, res) => {
+  const { email, subject, text } = req.body;
+  try {
+    const response = await sendmail(email, subject, text);
+    res.status(200).send({ success: true, data: response });
+  } catch (error) {
+    res.status(500).send({ success: false, error: error });
+    console.log(error, "err");
   }
 };

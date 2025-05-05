@@ -18,8 +18,6 @@ export default function Home() {
   useEffect(() => {
     fetchFoodData();
   }, []);
-  const searchParams = useSearchParams();
-  let idp = searchParams.get("categoryId") || "";
   return (
     <div className="bg-[#404040] h-fit">
       <img

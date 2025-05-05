@@ -6,6 +6,14 @@ const foodSchema = new mongoose.Schema(
     price: Number,
     image: String,
     ingredients: String,
+    quantity: {
+      type: Number,
+      default: 1,
+    },
+    total: {
+      type: Number,
+      default: 0,
+    },
     category: {
       type: Schema.Types.ObjectId,
       ref: "category",

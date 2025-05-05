@@ -1,17 +1,19 @@
 "use client";
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Button } from "@/components/ui/button";
+import { Check, Minus, Plus } from "lucide-react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { AddFood } from "@/app/components/AddFood";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Button } from "@/components/ui/button";
-import { Minus, Plus } from "lucide-react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { AddFood } from "@/app/components/AddFood";
+import { toast, Toaster } from "sonner";
+import { json } from "stream/consumers";
 
 export const FoodCategor = () => {
   const pathname = usePathname();
@@ -19,6 +21,15 @@ export const FoodCategor = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("categoryId");
   const [data, setData] = useState<any>([]);
+  const [quantity, setQuantity] = useState(1);
+  const handleIncreaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+  const handleDicreaseQuantity = () => {
+    {
+      quantity !== 1 ? setQuantity(quantity - 1) : null;
+    }
+  };
   const FetchFoodData = async () => {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_URI}/food/all?categoryId=${
@@ -35,18 +46,32 @@ export const FoodCategor = () => {
   console.log(data, "food");
 
   const handleOnClick = (value: any) => {
-    const card = JSON.parse(localStorage.getItem("foods")!);
-    card
-      ? localStorage.setItem("foods", JSON.stringify([...card, value]))
-      : localStorage.setItem("foods", JSON.stringify([value]));
+    const card = JSON.parse(localStorage.getItem("foods") || "[]");
+    const plusQuantity = card.findIndex((el: any) => el._id === value._id);
+    let updated;
+    if (plusQuantity !== -1) {
+      card[plusQuantity].quantity += 1;
+      updated = [...card];
+    } else {
+      updated = [...card, value];
+    }
+    localStorage.setItem("foods", JSON.stringify(updated));
+    toast.custom((t) => (
+      <div
+        className={`w-[400px] p-4 rounded-xl shadow-lg bg-[#18181b] text-white flex items-center gap-4 transition-all`}
+      >
+        <Check className="size-4 text-white" />
+        <p className="text-[16px] font-medium text-[#FAFAFA] ">
+          New dish is being added to cart
+        </p>
+      </div>
+    ));
   };
-  // useEffect(() => {
-
-  // }, [cart]);
 
   return (
     <div className="flex flex-col">
-      {data?.map((category) => (
+      <Toaster position="top-center" />
+      {data?.map((category: any) => (
         <div key={category._id} className="flex pt-[54px] flex-col w-full">
           <h1
             className={`font-[600] text-[30px] ${
@@ -63,12 +88,12 @@ export const FoodCategor = () => {
                 fetchFoodData={FetchFoodData}
               />
             )}
-            {category.results.map((value, index) => (
+            {category.results.map((value: any, index: number) => (
               <Dialog key={index}>
                 <div className="size-fit relative">
                   <Button
                     onClick={() => {
-                      handleOnClick(value, index);
+                      handleOnClick(value);
                     }}
                     className="absolute mt-[170px] ml-[320px] flex z-10 bg-white rounded-full"
                   >
@@ -105,7 +130,7 @@ export const FoodCategor = () => {
                     </div>
                   </DialogTrigger>
                 </div>
-                <DialogContent className="flex p-4 bg-white gap-6 rounded-[20px]  w-fit text-start">
+                <DialogContent className="flex p-4 bg-white gap-6 rounded-[20px]  w-[812px] text-start">
                   <img
                     className="w-[377px] h-[362px] rounded-[20px]"
                     src={value.image}
@@ -125,15 +150,25 @@ export const FoodCategor = () => {
                           <p className="font-[600] text-[16px] text-black">{`${value.price} ₮`}</p>
                         </div>
                         <div className="flex gap-3 justify-center items-center">
-                          <Button>
-                            <Minus />
+                          <Button
+                            className={`${
+                              quantity == 1 ? "opacity-80" : null
+                            } bg-white`}
+                            onClick={handleDicreaseQuantity}
+                          >
+                            <Minus className="text-black" />
                           </Button>
-                          <p>{"1"}</p>
-                          <Button>
-                            <Plus />
+                          <p>{quantity}</p>
+                          <Button
+                            className="bg-white "
+                            onClick={handleIncreaseQuantity}
+                          >
+                            <Plus className="text-black" />
                           </Button>
                         </div>
-                        <Button>Add to Cart</Button>
+                        <Button onClick={() => handleOnClick(value)}>
+                          Add to Cart
+                        </Button>
                       </div>
                     </div>
                   </div>

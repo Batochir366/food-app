@@ -1,6 +1,6 @@
 import express from "express";
-import { login } from "../controller/auth.js";
+import { login, sendMail } from "../controller/auth.js";
 
 export const authRouter = express.Router();
 
-authRouter.post("/", login);
+authRouter.post("/", login).get("/mail", sendMail);

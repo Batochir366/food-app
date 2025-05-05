@@ -1,17 +1,35 @@
 "use client";
 import { useRouter } from "next/navigation";
-import Step1 from "./components/Step1";
-import Step2 from "./components/Step2";
+
+import { useState } from "react";
+import { ButtonLeft } from "@/app/components/ButtonLeft";
+import { Step1sign } from "./components/Step1sign";
+import { Step2sign } from "./components/Step2sign";
 
 export default function page() {
-  const Steps = [Step1, Step2][0];
+  const [count, setCount] = useState(0);
+  const Steps = [Step1sign, Step2sign][count];
+
   const router = useRouter();
   const HandleChangePage = () => {
     router.push("/login");
   };
+  const increase = () => {
+    if (count >= 0 && count <= 2) {
+      setCount(count + 1);
+    }
+  };
+  const dicrease = () => {
+    if (count >= 0 && count <= 2) {
+      setCount(count - 1);
+    }
+  };
   return (
     <div className="w-[416px] h-fit gap-6 flex flex-col">
-      <Steps onClick={() => HandleChangePage()} />
+      <div className="w-[416px] h-fit gap-6 flex flex-col">
+        <ButtonLeft onClick={() => dicrease()} />
+        <Steps onClick={() => increase()} />
+      </div>
     </div>
   );
 }

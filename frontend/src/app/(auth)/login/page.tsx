@@ -12,9 +12,12 @@ export default function page() {
   const HandleChangePageRP = () => {
     router.push("/resetPassword");
   };
+  const directToHome = () => {
+    router.push("/");
+  };
   return (
     <div className="w-[416px] h-fit gap-6 flex flex-col">
-      <ButtonLeft />
+      <ButtonLeft onClick={() => directToHome()} />
       <div>
         <h1 className="text-[24px] font-[600]">Log in</h1>
         <p className="text-[16px] text-[#71717A]">
@@ -34,7 +37,10 @@ export default function page() {
           Forgot password ?
         </p>
       </div>
-      <Button className="w-[416px] h-[36px] bg-black text-white rounded-md">
+      <Button
+        onClick={directToHome}
+        className="w-[416px] h-[36px] bg-black text-white rounded-md"
+      >
         Let`s go
       </Button>
       <div className="flex w-full justify-center gap-3">

@@ -10,7 +10,7 @@ const Header = () => {
     router.push("/signUp");
   };
   const HandlePageLogIn = () => {
-    router.push("/signUp");
+    router.push("/login");
   };
   return (
     <div className="flex w-screen justify-between px-[88px] bg-black items-center">

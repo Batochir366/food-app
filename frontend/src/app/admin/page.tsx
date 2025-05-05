@@ -21,7 +21,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast, Toaster } from "sonner";
 import { FoodCategor } from "../components/FoodCategor";
-import MenuContainer from "../(main)/components/MenuContainer";
 import { CategoryButtons } from "../components/CategoryButtons";
 type dataType = {
   Name: string;
@@ -48,7 +47,7 @@ export default function page() {
         Name: inputValue,
       })
       .then((response) => {
-        FetchMenuData();
+        // FetchMenuData();
         toast.custom((t) => (
           <div
             className={`w-[400px] p-4 rounded-xl shadow-lg bg-[#18181b] text-white flex items-center gap-4 transition-all`}

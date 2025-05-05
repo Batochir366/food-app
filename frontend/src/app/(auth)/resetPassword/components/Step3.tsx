@@ -1,19 +1,18 @@
 "use client";
-import { ButtonLeft } from "@/app/components/ButtonLeft";
+
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { ChevronLeft } from "lucide-react";
+
 import { useState } from "react";
 
-const Step3 = () => {
+export const Step3 = ({ onClickButton }: { onClickButton?: () => void }) => {
   const [isChecked, setIsChecked] = useState<boolean>(true);
   const handleCheckBox = () => {
     setIsChecked(!isChecked);
   };
   return (
-    <div className="w-[416px] h-fit gap-6 flex flex-col">
-      <ButtonLeft />
+    <>
       <div>
         <h1 className="text-[24px] font-[600]">Create new password</h1>
         <p className="text-[16px] text-[#71717A]">
@@ -45,11 +44,12 @@ const Step3 = () => {
           </p>
         </div>
       </div>
-      <Button className="w-[416px] h-[36px] bg-black text-white rounded-md">
+      <Button
+        onClick={onClickButton}
+        className="w-[416px] h-[36px] bg-black text-white rounded-md"
+      >
         Create password
       </Button>
-    </div>
+    </>
   );
 };
-
-export default Step3;
